@@ -10,13 +10,22 @@ var express 	   = require('express'),
 	Comment 	   = require('./models/comment'),
 	User           = require('./models/user'),
 	seedDB 	       = require('./seeds');
+require('dotenv').config();
 
 // Requiring Routes
 var campgroundRoutes = require('./routes/campgrounds'),
 	commentRoutes    = require('./routes/comments'),
 	indexRoutes      = require('./routes/index');
 
-mongoose.connect('mongodb://localhost/yelp_camp', {useNewUrlParser: true, useFindAndModify: false, useCreateIndex: true});
+mongoose.connect('mongodb+srv://chris_admin:' + process.env.DB_PASS + '@cluster0-io4zq.mongodb.net/test?retryWrites=true&w=majority', {
+	useNewUrlParser: true,
+	useFindAndModify: false, 
+	useCreateIndex: true
+}).then(() => {
+	console.log('Connected to DB');
+}).catch(err => {
+	console.log('ERROR: ', err.message);
+});
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
