@@ -17,7 +17,7 @@ var campgroundRoutes = require('./routes/campgrounds'),
 	commentRoutes    = require('./routes/comments'),
 	indexRoutes      = require('./routes/index');
 
-mongoose.connect('mongodb+srv://chris_admin:' + process.env.DB_PASS + '@cluster0-io4zq.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DATABASEURL, {
 	useNewUrlParser: true,
 	useFindAndModify: false, 
 	useCreateIndex: true
@@ -26,6 +26,7 @@ mongoose.connect('mongodb+srv://chris_admin:' + process.env.DB_PASS + '@cluster0
 }).catch(err => {
 	console.log('ERROR: ', err.message);
 });
+
 app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
